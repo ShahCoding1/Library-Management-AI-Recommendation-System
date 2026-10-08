@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { X, BookOpen, Calendar, Clock, AlertCircle } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { X, Calendar } from 'lucide-react';
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+
 
 export default function BorrowModal({ book, isOpen, onClose, onSuccess }) {
   const { isAuthenticated } = useAuth();
@@ -12,8 +13,12 @@ export default function BorrowModal({ book, isOpen, onClose, onSuccess }) {
   if (!isOpen || !book) return null;
 
   const isAvailable = book.available_copies > 0;
-  const dueDate = new Date();
-  dueDate.setDate(dueDate.getDate() + 14);
+  const dueDate = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 14);
+    return d;
+  }, []);
+
 
   const handleAction = async (e) => {
     e.preventDefault();

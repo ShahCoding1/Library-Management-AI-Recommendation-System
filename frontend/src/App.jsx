@@ -25,8 +25,9 @@ function AppContent() {
   const [borrowModalBook, setBorrowModalBook] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  const { isAuthenticated, isAdmin, isLibrarian } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { activeSession } = useReadingSession();
+
 
   const setTab = (newTab, params = {}) => {
     setTabState(newTab);
@@ -148,10 +149,11 @@ function AppContent() {
           book={borrowModalBook}
           isOpen={!!borrowModalBook}
           onClose={() => setBorrowModalBook(null)}
-          onSuccess={(res) => {
+          onSuccess={() => {
             setBorrowModalBook(null);
             setTab('loans');
           }}
+
         />
       )}
     </div>
