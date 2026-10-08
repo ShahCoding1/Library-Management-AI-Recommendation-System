@@ -1,103 +1,678 @@
 # 📚 Book Recommendation, Screen-Time & Library Management System
 
-> **A University Final Year Project (FYP)** combining Atomic Library Circulation, Scikit-Learn Hybrid AI Recommendations (TF-IDF & Collaborative Filtering), 18-Profile Mood Discovery, and Live Screen-Time Analytics.
+### An Intelligent, Full-Stack Library Platform Powered by AI-Driven Book Discovery and Reading Analytics
+
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-Backend-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![React](https://img.shields.io/badge/React-Frontend-149ECA?logo=react&logoColor=white)](https://react.dev/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-Machine%20Learning-F7931E?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![License](https://img.shields.io/badge/License-Not%20Specified-lightgrey)](#license)
 
 ---
 
-## 🌟 Key Highlights & Tri-Pillar Architecture
+## 📖 Project Overview
 
-### 1. 📖 Library Circulation & Inventory Management
-* **Transactional Concurrency:** Thread-safe copy-level checkout, renewals, returns, and inventory locking.
-* **14-Day Loan Rules:** Dynamic due-date calculations, renewal limit controls (max 2 per loan), and automatic overdue penalties.
-* **Waitlist Reservations:** Queue position assignment (`#1`, `#2`, etc.) when all physical copies are checked out.
-* **Audit Trail:** Immutable ledger capturing all issue, renewal, return, and inventory adjustment events.
+**Book Recommendation, Screen-Time & Library Management System** is a full-stack software engineering Final Year Project (FYP) designed to combine traditional library management with intelligent book discovery, personalized recommendation techniques, and reading-activity analytics.
 
-### 2. 🧠 Hybrid Machine Learning Recommender Engine
-* **Content-Based Filtering:** Scikit-Learn TF-IDF vectorization across book synopses, authors, genres, and themes with Cosine Similarity calculations.
-* **Item-Based Collaborative Filtering:** User-item rating matrix calculating peer affinities.
-* **18-Profile Mood Discovery:** Mood-driven filtering matching books to emotional and atmospheric profiles.
-* **Transparent Reason Generation:** Explains to the user *why* a book was recommended (e.g. *"Because you rated Crime and Punishment 5★"* or *"Matches Melancholic mood"*).
-* **Evaluated Metrics (K=5):** Precision@5: `0.500`, Recall@5: `0.875`, Hit Rate@5: `1.000`, NDCG@5: `0.830`.
+The project explores how modern web technologies, structured data management, and machine learning can improve the experience of discovering, managing, and interacting with books.
 
-### 3. ⏱️ Screen-Time & Reading Analytics Telemetry
-* **Live Heartbeat Timer:** Telemetry updates every 30 seconds with inactivity caps.
-* **Habit Streaks & Goals:** Daily streak counters, longest streak tracking, and daily reading goal progress bars.
-* **Visual Breakdown:** 7-day screen-time bar charts and thematic mood/genre distribution footprints.
+Unlike conventional library management systems that primarily focus on book inventory and borrowing records, this project places additional emphasis on **personalized book recommendations, mood-based advanced search, and meaningful reading engagement analysis**.
+
+It is designed around three interconnected domains:
+
+1. **Library Management:** Organizing books, readers, inventory, borrowing, returns, and administrative workflows.
+2. **Intelligent Book Discovery:** Helping readers find relevant books through advanced search, mood classification, and recommendation algorithms.
+3. **Reading and Screen-Time Analytics:** Supporting reading-session tracking, engagement statistics, and progress visualization.
+
+The system follows a modular, API-driven architecture intended to support maintainability, extensibility, security, and future enhancements.
 
 ---
 
-## 🚀 Quick Start (Windows CMD)
+## 🎯 Project Objectives
 
-### Option A: One-Click Simultaneous Launch
-Simply run the root batch script:
-```cmd
-start_servers.bat
+The primary objectives of this project are to:
+
+- Design a centralized, web-based library management platform.
+- Simplify the discovery and organization of books.
+- Support advanced search using multiple book attributes.
+- Introduce mood-based book discovery for a more intuitive browsing experience.
+- Explore machine learning techniques for personalized book recommendations.
+- Analyze user interactions to improve recommendation relevance.
+- Track meaningful reading sessions and application engagement.
+- Provide dashboards for readers and library administrators.
+- Implement secure authentication and role-based access control.
+- Apply professional software engineering principles across the application.
+
+---
+
+## ✨ Core Features
+
+### 📚 1. Library and Book Management
+
+The library management component is designed to support the essential operations of a modern library.
+
+**Functional scope:**
+
+- Book catalog and detailed book profiles
+- Author and genre management
+- Book categories, tags, and mood classifications
+- Inventory and availability management
+- Book borrowing and return workflows
+- Reservation management
+- User profiles and borrowing history
+- Ratings and written reviews
+- Favorites and wishlists
+- Librarian and administrator workflows
+
+The system is intended to maintain accurate inventory records and consistent borrowing transactions.
+
+### 🔍 2. Advanced Book Search
+
+Advanced search is one of the central features of this project.
+
+Readers can discover books using combinations of relevant attributes rather than relying exclusively on a book title.
+
+**Search dimensions include:**
+
+- Book title
+- Author
+- Genre and category
+- Mood
+- Tags
+- Language
+- Publication year
+- Reader rating
+- Availability
+- Page count
+- ISBN
+
+The search design also considers filtering, sorting, pagination, and search suggestions.
+
+### 💜 3. Mood-Based Book Discovery
+
+One of the project's distinguishing concepts is the ability to discover books according to a reader's selected mood or desired reading experience.
+
+**Example mood categories:**
+
+| Mood | Discovery purpose |
+|---|---|
+| Romantic | Romance-oriented stories and themes |
+| Historical | Books with historical subjects or settings |
+| Inspirational | Uplifting and inspiring reading |
+| Motivational | Personal growth and motivational content |
+| Sad | Emotionally moving or melancholic themes |
+| Happy | Cheerful and lighthearted reading |
+| Mysterious | Mystery and intrigue |
+| Adventurous | Exploration and adventure |
+| Philosophical | Reflective and thought-provoking content |
+| Relaxing | Calm and comforting reading |
+
+The system is designed to support combinations such as **Romantic + Historical** or **Motivational + Inspirational**.
+
+Mood classification is treated as a book-discovery mechanism, not as a psychological or medical assessment.
+
+---
+
+## 🧠 AI-Powered Book Recommendation System
+
+The recommendation engine is a major intelligent component of the project.
+
+Its objective is to identify books that may be relevant to a reader based on book metadata, preferences, and interactions.
+
+### Recommendation Approaches
+
+The project specification defines a hybrid recommendation architecture incorporating the following techniques.
+
+**Content-Based Filtering**
+
+Content-based recommendation identifies similarities between books using descriptive information such as titles, descriptions, authors, genres, categories, moods, and tags.
+
+A baseline implementation can use:
+
+- Text preprocessing
+- TF-IDF vectorization
+- Cosine similarity
+- User preference vectors
+
+**Collaborative Filtering**
+
+Collaborative filtering considers patterns across readers' interactions with books.
+
+For example, books positively received by readers with overlapping interests may become recommendation candidates for one another.
+
+The planned approach includes user–book interaction matrices and item-based collaborative relationships.
+
+**Mood-Based Recommendation**
+
+Selected moods and previously expressed reading preferences can contribute to candidate selection and ranking.
+
+**Interaction-Based Personalization**
+
+Reader activity can provide recommendation signals, including:
+
+- Ratings
+- Favorites
+- Wishlist additions
+- Borrowing history
+- Book views
+- Recommendation interactions
+
+Positive and negative feedback are considered separately.
+
+### Hybrid Recommendation Architecture
+
+```text
+                   BOOK METADATA
+                         |
+                   USER PREFERENCES
+                         |
+                   USER INTERACTIONS
+                         |
+                         v
+                 FEATURE ENGINEERING
+                         |
+          +--------------+--------------+
+          |              |              |
+          v              v              v
+     Content-Based   Collaborative   Mood Matching
+       Filtering       Filtering
+          |              |              |
+          +--------------+--------------+
+                         |
+                         v
+              HYBRID RELEVANCE SCORING
+                         |
+                         v
+                CANDIDATE FILTERING
+                         |
+                         v
+                 DIVERSIFICATION
+                         |
+                         v
+              EXPLAINABLE RESULTS
+                         |
+                         v
+               RECOMMENDED BOOKS
 ```
 
-### Option B: Manual Terminal Execution
+### Recommendation Scoring
 
-#### 1. Backend API (Django REST Framework)
-```cmd
-cd "backend"
-python manage.py runserver 127.0.0.1:8000
-```
-*API Base URL:* `http://127.0.0.1:8000/api/v1/`
+The proposed hybrid model combines normalized recommendation signals.
 
-#### 2. Frontend Web App (React 19 + Vite)
-```cmd
-cd "frontend"
-node "node_modules/vite/bin/vite.js" --host
+```text
+Final Score =
+    W_content       × Content Score
+  + W_collaborative × Collaborative Score
+  + W_mood          × Mood Score
+  + W_preference    × Preference Score
+  + W_popularity    × Popularity Score
+  + W_rating        × Rating Score
+  + W_recency       × Recency Score
+  + W_availability  × Availability Score
 ```
-*App URL:* `http://localhost:5173`
+
+The weights are intended to be configurable and should be evaluated experimentally rather than assumed to be universally optimal.
+
+### Cold-Start Handling
+
+The design considers situations where sufficient interaction history is unavailable.
+
+For new readers, recommendation candidates can be selected using explicitly chosen preferences, popular books, highly rated books, and recent additions.
+
+For new books, descriptive metadata allows content-based matching even when no interaction history exists.
+
+### Explainable Recommendations
+
+The recommendation interface is designed to provide meaningful reasons for suggestions, such as:
+
+- Similar to books you enjoyed
+- Matches your preferred genre
+- Matches your selected mood
+- Popular among readers with similar interests
+- Highly rated in a relevant category
+
+Explanations should be generated from actual recommendation signals rather than fabricated descriptions.
 
 ---
 
-## 🧪 Running System Test Suite
-Execute the full automated verification suite:
-```cmd
-run_tests.bat
+## ⏱️ Screen-Time and Reading Analytics
+
+The analytics component is designed to help readers understand their activity and reading habits.
+
+### Reading Session Tracking
+
+A reading session can include:
+
+- Associated reader
+- Selected book
+- Session start and end times
+- Recorded duration
+- Pages read, when applicable
+- Activity source
+
+### Reader Analytics
+
+The planned dashboard includes:
+
+| Metric | Description |
+|---|---|
+| Daily reading time | Recorded reading activity for the day |
+| Weekly reading time | Reading activity during the week |
+| Monthly reading time | Monthly engagement summary |
+| Average session duration | Average duration of recorded sessions |
+| Reading streak | Consecutive periods of recorded reading |
+| Books completed | Books marked as completed |
+| Reading goals | Progress toward selected targets |
+| Reading trends | Historical activity visualization |
+
+**Measurement principle:** Application usage time and actual reading time are not automatically equivalent. The system design distinguishes these concepts to avoid misleading analytics.
+
+---
+
+## 🛠️ Technology Stack
+
+| Component | Technology |
+|---|---|
+| Programming language | Python |
+| Backend framework | Django |
+| API framework | Django REST Framework |
+| Frontend library | React |
+| Frontend development tool | Vite |
+| Frontend language | JavaScript |
+| Database access | Django ORM |
+| Local database | SQLite, where configured |
+| Production database target | PostgreSQL |
+| Machine learning | Scikit-learn |
+| Numerical processing | NumPy |
+| Data processing | pandas, where applicable |
+| Recommendation techniques | TF-IDF, cosine similarity, collaborative filtering |
+| Version control | Git and GitHub |
+| API architecture | REST |
+
+---
+
+## 🏗️ System Architecture
+
+The project uses a separation between the presentation layer, backend services, and persistent data.
+
+```text
+                    +----------------------+
+                    |        USER          |
+                    +----------+-----------+
+                               |
+                               v
+                    +----------------------+
+                    |    REACT FRONTEND    |
+                    |    Vite / JavaScript |
+                    +----------+-----------+
+                               |
+                               | REST API
+                               v
+                    +----------------------+
+                    |    DJANGO BACKEND    |
+                    | Django REST Framework|
+                    +----------+-----------+
+                               |
+             +-----------------+------------------+
+             |                 |                  |
+             v                 v                  v
+     +---------------+ +---------------+ +---------------+
+     |    LIBRARY    | | RECOMMENDATION| |   ANALYTICS   |
+     |   SERVICES    | |    ENGINE     | |   SERVICES    |
+     +---------------+ +---------------+ +---------------+
+             |                 |                  |
+             +-----------------+------------------+
+                               |
+                               v
+                    +----------------------+
+                    |      DJANGO ORM      |
+                    +----------+-----------+
+                               |
+                               v
+                    +----------------------+
+                    |       DATABASE       |
+                    +----------------------+
 ```
-This executes:
-1. **Django Unit & API Tests:** `python manage.py test` (5/5 Passed)
-2. **ML Recommender Evaluation:** `python manage.py evaluate_recommendation_model`
-3. **Frontend Production Build:** Vite bundle compilation (Passed in <1s)
+
+The architectural goal is to keep substantial business logic inside backend services rather than embedding it directly in frontend components.
 
 ---
 
-## 🔑 Demo & Defense Accounts
+## 📂 Project Structure
 
-| Role | Email | Password | Access Capabilities |
-| :--- | :--- | :--- | :--- |
-| **Reader / Patron** | `reader@library.com` | `Reader123!` | Catalog, Mood Discovery, Loans, Wishlist, Timer, Reviews |
-| **Librarian** | `librarian@library.com` | `Admin123!` | Circulation Desk, Loan Records, Inventory Management |
-| **Admin** | `admin@library.com` | `Admin123!` | Full System Control, User Accounts, Rec Debugger, Audit Logs |
+The local application is organized around separate frontend and backend directories.
+
+```text
+LibraryManagementSystem/
+|
+|-- backend/
+|   |-- manage.py
+|   |-- requirements.txt
+|   |-- ...
+|
+|-- frontend/
+|   |-- package.json
+|   |-- package-lock.json
+|   |-- src/
+|   |-- ...
+|
+|-- start_servers.bat
+|-- README.md
+|-- .gitignore
+```
+
+Additional folders and modules may vary according to the implementation.
 
 ---
 
-## 📡 REST API Endpoint Summary
+## 🚀 Getting Started
 
-| Domain | Method | Endpoint | Description |
-| :--- | :--- | :--- | :--- |
-| **Auth** | `POST` | `/api/v1/auth/login/` | JWT access & refresh token pair |
-| **Auth** | `POST` | `/api/v1/auth/register/` | Patron registration |
-| **Auth** | `GET` | `/api/v1/auth/me/` | Current user profile |
-| **Catalog** | `GET` | `/api/v1/books/` | Paginated catalog with multi-filter |
-| **Catalog** | `GET` | `/api/v1/books/{id}/` | Full book profile with metadata |
-| **Catalog** | `GET` | `/api/v1/books/{id}/similar/` | TF-IDF Cosine similar books |
-| **Catalog** | `POST` | `/api/v1/books/{id}/rate/` | Submit 1–5 star rating |
-| **Catalog** | `GET` | `/api/v1/books/moods/` | 18 mood discovery profiles |
-| **Search** | `GET` | `/api/v1/search/` | Multi-criteria search engine |
-| **Search** | `GET` | `/api/v1/search/autocomplete/` | Real-time search suggestions |
-| **Recommendations** | `GET` | `/api/v1/recommendations/me/` | Personalized hybrid recommendations |
-| **Recommendations** | `GET` | `/api/v1/recommendations/mood/{slug}/` | Mood-filtered curated recommendations |
-| **Circulation** | `POST` | `/api/v1/library/borrow/` | Borrow physical copy (14 days) |
-| **Circulation** | `POST` | `/api/v1/library/return/` | Process book return |
-| **Circulation** | `POST` | `/api/v1/library/renew/` | Extend loan by 14 days (max 2) |
-| **Circulation** | `POST` | `/api/v1/library/reserve/` | Join waitlist queue |
-| **Circulation** | `GET` | `/api/v1/library/my-loans/` | Patron loan status |
-| **Screen-Time** | `POST` | `/api/v1/analytics/reading-sessions/start/` | Start live timer session |
-| **Screen-Time** | `POST` | `/api/v1/analytics/reading-sessions/{id}/heartbeat/` | 30s session pulse |
-| **Screen-Time** | `POST` | `/api/v1/analytics/reading-sessions/{id}/end/` | Finalize reading duration & streak |
-| **Screen-Time** | `GET` | `/api/v1/analytics/user/` | User screen-time & streak analytics |
-| **Admin** | `GET` | `/api/v1/analytics/admin/` | Platform-wide KPIs & trends |
-| **Admin** | `GET` | `/api/v1/recommendations/admin/debug/` | ML vector and score inspector |
+These instructions describe local development on Windows using PowerShell.
+
+### Prerequisites
+
+Install the following tools:
+
+- Python
+- Node.js and npm
+- Git
+- A code editor such as Visual Studio Code
+
+Verify the installations:
+
+```powershell
+python --version
+node --version
+npm --version
+git --version
+```
+
+### 1. Clone the Repository
+
+```powershell
+git clone https://github.com/ShahCoding1/Library-Management-AI-Recommendation-System.git
+```
+
+Navigate into the project:
+
+```powershell
+cd Library-Management-AI-Recommendation-System
+```
+
+### 2. Configure the Backend
+
+Navigate to the backend directory:
+
+```powershell
+cd backend
+```
+
+Create a Python virtual environment:
+
+```powershell
+python -m venv venv
+```
+
+Install dependencies using the virtual environment's Python interpreter:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+If the application provides an `.env.example` file, copy it to `.env` and configure the required environment variables.
+
+### 3. Apply Database Migrations
+
+```powershell
+.\venv\Scripts\python.exe manage.py migrate
+```
+
+### 4. Start the Django Backend
+
+```powershell
+.\venv\Scripts\python.exe manage.py runserver 127.0.0.1:8000
+```
+
+Backend development address:
+
+**http://127.0.0.1:8000/**
+
+Keep this terminal running.
+
+### 5. Configure the Frontend
+
+Open another PowerShell terminal and navigate to the cloned project directory.
+
+```powershell
+cd Library-Management-AI-Recommendation-System\frontend
+```
+
+Install frontend dependencies:
+
+```powershell
+npm install
+```
+
+Start the frontend development server:
+
+```powershell
+npm run dev
+```
+
+The default Vite development address is:
+
+**http://localhost:5173/**
+
+Open the address displayed by Vite in your browser.
+
+### 6. Run the Application
+
+Both development servers should remain active.
+
+| Service | Development address |
+|---|---|
+| Django backend | http://127.0.0.1:8000 |
+| React frontend | http://localhost:5173 |
+
+**Note:** Database content, environment configuration, and trained recommendation artifacts may require additional local setup depending on the repository contents.
+
+---
+
+## 🔌 REST API Design
+
+The project specification proposes versioned REST endpoints.
+
+Representative endpoint groups include:
+
+```text
+/api/v1/auth/
+/api/v1/users/
+/api/v1/books/
+/api/v1/authors/
+/api/v1/genres/
+/api/v1/moods/
+/api/v1/search/
+/api/v1/loans/
+/api/v1/reservations/
+/api/v1/recommendations/
+/api/v1/reading/
+/api/v1/analytics/
+/api/v1/admin/
+```
+
+These paths describe the intended API structure. Actual available endpoints should be confirmed against the Django URL configuration.
+
+---
+
+## 🗄️ Database Design
+
+The planned database model includes entities representing:
+
+**Accounts and users:** Users, profiles, roles, and preferences.
+
+**Books and metadata:** Books, authors, genres, categories, moods, and tags.
+
+**Library operations:** Inventory items, loans, reservations, and returns.
+
+**Reader interactions:** Favorites, wishlists, ratings, reviews, and reading sessions.
+
+**Intelligent features:** Search events, recommendation events, and recommendation records.
+
+**Administration:** Notifications, audit logs, and system settings.
+
+The design emphasizes relational integrity, validation, indexing, and transaction-safe operations.
+
+---
+
+## 🔐 Security and Data Integrity
+
+Security is an important part of the system's engineering requirements.
+
+The specification emphasizes:
+
+- Secure password hashing
+- Authentication and authorization
+- Role-based access control
+- Backend input validation
+- Protection against unauthorized data access
+- Secure handling of uploaded files
+- Environment-based secret management
+- Safe database operations
+- Transactional inventory updates
+- Appropriate error handling
+- Administrative audit logging
+
+Sensitive information, local databases, virtual environments, and dependency directories should not be committed to the public repository.
+
+---
+
+## 🧪 Testing and Quality Assurance
+
+The project defines a testing strategy covering:
+
+- Unit tests for business logic
+- Backend API tests
+- Database integration tests
+- Authentication and authorization tests
+- Library borrowing and return workflows
+- Advanced search and mood filtering
+- Recommendation ranking and cold-start behavior
+- Reading-session and analytics functionality
+- Security validation
+- Frontend interactions
+
+### Run Django Tests
+
+From the backend directory:
+
+```powershell
+.\venv\Scripts\python.exe manage.py test
+```
+
+### Check Django Configuration
+
+```powershell
+.\venv\Scripts\python.exe manage.py check
+```
+
+### Build the Frontend
+
+From the frontend directory:
+
+```powershell
+npm run build
+```
+
+Test coverage and results should be reported from actual execution rather than assumed.
+
+---
+
+## 📊 Recommendation Evaluation
+
+The project specification includes several evaluation measures for assessing recommendation quality.
+
+| Metric | Purpose |
+|---|---|
+| Precision@K | Relevance among the top K recommendations |
+| Recall@K | Coverage of relevant items within the top K |
+| Hit Rate@K | Whether at least one relevant item is recommended |
+| NDCG@K | Ranking quality with position-aware relevance |
+| Catalog coverage | Diversity of books receiving recommendation exposure |
+| Diversity | Variety among recommended items |
+| Click-through rate | Reader engagement with displayed recommendations |
+
+Meaningful evaluation requires suitable interaction data and an appropriate evaluation protocol.
+
+Synthetic demonstration data should be clearly distinguished from real-world usage data.
+
+---
+
+## 🌱 Future Enhancements
+
+Potential improvements include:
+
+- More advanced hybrid recommendation optimization
+- Larger book datasets
+- Improved recommendation explanations
+- Personalized reading plans
+- Expanded recommendation evaluation
+- More detailed reading insights
+- Mobile application support
+- Improved accessibility
+- Cloud deployment
+- Scalable background model training
+- Expanded notification workflows
+- Additional librarian reporting tools
+
+These enhancements represent possible future work, not claims about currently implemented functionality.
+
+---
+
+## 🎓 Academic Context
+
+This project was developed as part of the **Bachelor of Science in Software Engineering** at:
+
+**City University of Science and Information Technology (CUSIT), Peshawar, Pakistan.**
+
+It brings together concepts from:
+
+- Software Engineering
+- Web Engineering
+- Database Systems
+- Artificial Intelligence
+- Data Structures and Algorithms
+- Software Design and Architecture
+- Human-Computer Interaction
+- Software Quality Engineering
+
+The project demonstrates an interdisciplinary approach to full-stack application development, intelligent information retrieval, and user-focused software design.
+
+---
+
+## 👨‍💻 Developer
+
+**Muhammad Shah Khalid**
+
+BS Software Engineering  
+City University of Science and Information Technology (CUSIT), Peshawar, Pakistan
+
+**GitHub:** [@ShahCoding1](https://github.com/ShahCoding1)
+
+**Repository:** [Library Management AI Recommendation System](https://github.com/ShahCoding1/Library-Management-AI-Recommendation-System)
+
+---
+
+## 📄 License
+
+No open-source license has been specified for this repository.
+
+A suitable license may be added in the future if the project is intended for open-source distribution.
+
+---
+
+### ⭐ Support the Project
+
+If you find this project interesting or useful, consider starring the repository.
+
+**Built with a focus on intelligent book discovery, practical software engineering, and meaningful reading experiences.**
