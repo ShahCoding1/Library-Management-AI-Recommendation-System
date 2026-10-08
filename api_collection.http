@@ -1,0 +1,152 @@
+### Book Recommendation, Screen-Time & Library Management System - API Collection
+@baseUrl = http://127.0.0.1:8000/api/v1
+
+### ==============================================================================
+### 1. AUTHENTICATION & USERS
+### ==============================================================================
+
+### Login as Reader
+# @name loginReader
+POST {{baseUrl}}/auth/login/
+Content-Type: application/json
+
+{
+  "email": "reader@library.com",
+  "password": "Reader123!"
+}
+
+### Store Token
+@readerToken = {{loginReader.response.body.access}}
+
+### Login as Admin / Librarian
+# @name loginAdmin
+POST {{baseUrl}}/auth/login/
+Content-Type: application/json
+
+{
+  "email": "admin@library.com",
+  "password": "Admin123!"
+}
+
+### Store Admin Token
+@adminToken = {{loginAdmin.response.body.access}}
+
+### Get Current User Profile
+GET {{baseUrl}}/auth/me/
+Authorization: Bearer {{readerToken}}
+
+### ==============================================================================
+### 2. BOOKS, MOODS & SEARCH
+### ==============================================================================
+
+### Get Catalog Books (Paginated)
+GET {{baseUrl}}/books/?page=1&page_size=10
+
+### Get Single Book Detail
+GET {{baseUrl}}/books/1/
+
+### Get Similar Books (TF-IDF Cosine Similarity)
+GET {{baseUrl}}/books/1/similar/
+
+### Get 18 Mood Profiles
+GET {{baseUrl}}/books/moods/
+
+### Multi-Filter Search
+GET {{baseUrl}}/search/?q=space&mood=mysterious&available=true
+
+### Autocomplete Suggestions
+GET {{baseUrl}}/search/autocomplete/?q=odys
+
+### ==============================================================================
+### 3. HYBRID RECOMMENDATION ENGINE
+### ==============================================================================
+
+### Get My Personalized Recommendations (Hybrid)
+GET {{baseUrl}}/recommendations/me/?limit=6
+Authorization: Bearer {{readerToken}}
+
+### Get Mood-Filtered Recommendations
+GET {{baseUrl}}/recommendations/mood/mysterious/?limit=6
+
+### Admin Rec Debugger & Score Inspector
+GET {{baseUrl}}/recommendations/admin/debug/?book_id=1
+Authorization: Bearer {{adminToken}}
+
+### Admin Rebuild Recommendation Model Matrix
+POST {{baseUrl}}/recommendations/admin/rebuild/
+Authorization: Bearer {{adminToken}}
+
+### ==============================================================================
+### 4. LIBRARY CIRCULATION & LOANS
+### ==============================================================================
+
+### Borrow a Book (14 Days)
+POST {{baseUrl}}/library/borrow/
+Authorization: Bearer {{readerToken}}
+Content-Type: application/json
+
+{
+  "book_id": 1,
+  "notes": "Testing borrowing from API"
+}
+
+### Get My Active Loans
+GET {{baseUrl}}/library/my-loans/
+Authorization: Bearer {{readerToken}}
+
+### Toggle Favorite Book
+POST {{baseUrl}}/library/favorites/toggle/
+Authorization: Bearer {{readerToken}}
+Content-Type: application/json
+
+{
+  "book_id": 1
+}
+
+### Toggle Wishlist
+POST {{baseUrl}}/library/wishlist/toggle/
+Authorization: Bearer {{readerToken}}
+Content-Type: application/json
+
+{
+  "book_id": 2
+}
+
+### ==============================================================================
+### 5. SCREEN-TIME & READING ANALYTICS
+### ==============================================================================
+
+### Start Live Reading Session
+# @name startSession
+POST {{baseUrl}}/analytics/reading-sessions/start/
+Authorization: Bearer {{readerToken}}
+Content-Type: application/json
+
+{
+  "book_id": 1,
+  "source": "WEB"
+}
+
+### Store Session ID
+@sessionId = {{startSession.response.body.id}}
+
+### Session Heartbeat Pulse
+POST {{baseUrl}}/analytics/reading-sessions/{{sessionId}}/heartbeat/
+Authorization: Bearer {{readerToken}}
+
+### End Reading Session
+POST {{baseUrl}}/analytics/reading-sessions/{{sessionId}}/end/
+Authorization: Bearer {{readerToken}}
+Content-Type: application/json
+
+{
+  "pages_read": 12
+}
+
+### Get User Screen-Time & Streak Analytics
+GET {{baseUrl}}/analytics/user/
+Authorization: Bearer {{readerToken}}
+
+### Get Admin Platform-Wide Telemetry
+GET {{baseUrl}}/analytics/admin/
+Authorization: Bearer {{adminToken}}
