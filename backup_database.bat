@@ -1,5 +1,6 @@
 @echo off
-title Database Snapshot & Backup
+title Database Snapshot ^& Backup
+
 echo ========================================================
 echo   DATABASE BACKUP UTILITY
 echo ========================================================

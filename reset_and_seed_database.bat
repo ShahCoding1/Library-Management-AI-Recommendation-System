@@ -1,7 +1,7 @@
 @echo off
 title Reset and Seed Database
 echo ========================================================
-echo   DATABASE RESET & RE-SEEDING SCRIPT
+echo   DATABASE RESET ^& RE-SEEDING SCRIPT
 echo ========================================================
 echo.
 echo WARNING: This will flush existing data and re-seed fresh catalog data.
@@ -18,7 +18,7 @@ echo [1/3] Running migrations...
 python manage.py migrate
 
 echo.
-echo [2/3] Seeding fresh realistic library catalog & users...
+echo [2/3] Seeding fresh realistic library catalog ^& users...
 python manage.py seed_library_data
 
 echo.
@@ -27,6 +27,7 @@ python manage.py rebuild_recommendation_model
 
 echo.
 echo ========================================================
-echo   DATABASE RESET & SEEDING COMPLETED SUCCESSFULLY!
+echo   DATABASE RESET ^& SEEDING COMPLETED SUCCESSFULLY!
 echo ========================================================
 pause
+
